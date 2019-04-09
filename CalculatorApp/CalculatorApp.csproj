@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BidmasOrdering.cs" />
+    <Compile Include="BidmasOrderingExpressionTree.cs" />
     <Compile Include="Calculator.cs" />
     <Compile Include="CalculationManager.cs" />
     <Compile Include="ListManagement.cs" />

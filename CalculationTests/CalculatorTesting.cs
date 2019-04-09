@@ -25,6 +25,7 @@ namespace CalculationTests
         [DataRow("1+1+1", 3)]
         [DataRow("12-2+2", 12)]
         [DataRow("10*10/2+25", 75)]
+        [DataRow("2*5/4-3(2*2)",-9.5)]
         public void SumOfEquationTest(string equation, int expected)
         {
             Calculator calc = new Calculator();
@@ -32,6 +33,25 @@ namespace CalculationTests
 
             Assert.AreEqual(expected, result);
         }
+        //[TestMethod]
+        //[DataRow("1+1(2+2(3+3))", "1+1*14")]
+        //public void ConvertEquationToBidmasTest(string equation, string expected)
+        //{
+        //    BidmasOrdering Bidmas = new BidmasOrdering();
+        //    var result = Bidmas.Convert(equation);
 
+        //    Assert.AreEqual(expected, result);
+        //}
+        [TestMethod]
+        [DataRow("1+1", 2)]
+        [DataRow("1+1+1", 3)]
+        [DataRow("2+2*2/2", 4)]
+        [DataRow("2/2*2+2", 4)]
+        public void BidmasTest(string equation, int expected)
+        {
+            var sut = NodeBuilder.BuildNode(equation);
+
+            Assert.AreEqual(expected, sut.getValue());
+        }
     }
 }

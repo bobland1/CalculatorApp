@@ -18,8 +18,11 @@ namespace CalculatorApp
 
         public static bool IsCharacterNumber(char input) => IsCharacterIn(input,
             new char[10] {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'});
+
+        public static bool IsStringNumber(string input) => !input.Any(c => !IsCharacterNumber(c));
+
         public static bool IsCharacterOperator(char input) => IsCharacterIn(input,
-            new char[4] { '+', '-', '*', '/' });
+            new char[6] { '+', '-', '*', '/', '(',')' });
 
         public static bool IsOperatorDuplicated(string equation)
         {
