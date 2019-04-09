@@ -47,6 +47,10 @@ namespace CalculationTests
         [DataRow("1+1+1", 3)]
         [DataRow("2+2*2/2", 4)]
         [DataRow("2/2*2+2", 4)]
+        [DataRow("1+(2+2)", 5)]
+        [DataRow("(1+2)+2", 5)]
+        [DataRow("(1*2)*(2+4)", 12)]
+        [DataRow("4-3*7+(2/2+(7*2)", -2)]
         public void BidmasTest(string equation, int expected)
         {
             var sut = NodeBuilder.BuildNode(equation);

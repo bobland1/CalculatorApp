@@ -19,16 +19,29 @@ namespace CalculatorApp
 
         public static INode BuildNode(string equation)
         {
+            if(equation[0] == '(' && equation[equation.Length-1] == ')')
+            {
+                return BuildNode(equation.Substring(1, equation.Length - 2));
+            }
             if (EquationValidator.IsStringNumber(equation))
             {
                 return new Number(equation);
             }
 
+
             foreach(var op in OrderedOperators)
             {
+                var bracketCounter = 0;
                 for(int i = 0; i < equation.Length; i++)
                 {
-                    if(equation[i] == op)
+                    if (equation[i] == '(')
+                    {
+                        bracketCounter++;
+                    } else if (equation[i] == ')')
+                    {
+                        bracketCounter--;
+                    }
+                    if (equation[i] == op && bracketCounter == 0)
                     {
                         return new Node(equation.Substring(0, i), equation.Substring(i+1), Operation.GetOperator(equation[i]));
                     }
