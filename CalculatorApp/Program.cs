@@ -24,14 +24,14 @@ namespace CalculatorApp
                 {
                     equation = EquationHandler();
                     Console.WriteLine(
-                    CalculationBuilder.Calculation(equation).getValue());
+                    CalculationGenerator.Calculation(equation).getValue());
                     Console.WriteLine("Enter another equation or Type 'exit' to exit: ");
                 }
                 while (equation.ToLower() != "exit");
             }
-            catch (Exception e)
+            catch (InvalidEquationException e)
             {
-                Console.WriteLine("ERR. Please try again");
+                Console.WriteLine(e.Message);
                 IntializeCalculator();
             }
         }
@@ -42,8 +42,15 @@ namespace CalculatorApp
             do
             {
                 equation = Console.ReadLine()?.Trim();
-                if (equation == "exit") return equation;
-                if(!EquationValidator.IsEquationValid(EquationValidator.RemoveWhitespace(equation))) Console.WriteLine("Invalid Equation! Please try again.");
+                if (equation == "exit")
+                {
+                    Console.WriteLine("Exiting..");
+                    Environment.Exit(-1);
+                }
+                if (!EquationValidator.IsEquationValid(EquationValidator.RemoveWhitespace(equation)))
+                {
+                    Console.WriteLine("Invalid Equation! Please try again.");
+                }
             }
             while (!EquationValidator.IsEquationValid(EquationValidator.RemoveWhitespace(equation)));
             return equation;

@@ -43,7 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Calculator.cs" />
+    <Compile Include="BadValueException.cs" />
+    <Compile Include="CalculationGenerator.cs" />
+    <Compile Include="EquationTreeGenerator.cs" />
+    <Compile Include="InvalidEquationException.cs" />
     <Compile Include="old_methods\old_Calculator.cs" />
     <Compile Include="old_methods\old_CalculationManager.cs" />
     <Compile Include="old_methods\old_ListManagement.cs" />

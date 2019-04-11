@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CalculatorApp;
+using FluentAssertions;
 
 namespace CalculationTests
 {
@@ -55,7 +56,7 @@ namespace CalculationTests
         [DataRow("10*10/2+25", 75)]
         public void SumOfEquation_OperatorsTest(string _equation, double expected)
         {
-            var _result = CalculationBuilder.Calculation(_equation);
+            var _result = CalculationGenerator.Calculation(_equation);
 
             Assert.AreEqual(expected, _result.getValue());
         }
@@ -74,7 +75,7 @@ namespace CalculationTests
         [DataRow("(1*2)*(2+(3*4))*(1*2)", 56)]
         public void SumOfEquation_BracketsTest(string _equation, double expected)
         {
-            var _result = CalculationBuilder.Calculation(_equation);
+            var _result = CalculationGenerator.Calculation(_equation);
 
             Assert.AreEqual(expected, _result.getValue());
         }
@@ -86,9 +87,17 @@ namespace CalculationTests
         [DataRow("8+(7*2)^(2+1)", 2752)]
         public void SumOfEquation_IndicesTest(string _equation, double expected)
         {
-            var _result = CalculationBuilder.Calculation(_equation);
+            var _result = CalculationGenerator.Calculation(_equation);
 
             Assert.AreEqual(expected, _result.getValue());
+        }
+
+        [TestMethod]
+        public void EquationHandlerTest()
+        {
+            Action action = () => CalculationGenerator.Calculation("dfpihfisdfhidsjdsiosj");
+            action.Should().Throw<Exception>()
+                .WithMessage("Equation is Invalid!");
         }
     }
 }

@@ -10,14 +10,12 @@ namespace CalculatorApp
     {
         public static string RemoveWhitespace(string _input)
         {
-            _input = _input.Replace(" ", string.Empty);
-            return _input;
+            return _input = _input.Replace(" ", string.Empty);
         }
 
-        public static bool IsEquationNull(string _input)
+        public static Exception InvalidEquationException()
         {
-            if (_input == "") return true;
-            return false;
+            throw new InvalidEquationException("Equation is Invalid!");
         }
 
         public static bool IsCharacterIn(char _input, IEnumerable<char> characterArray) => characterArray.Contains(_input);
@@ -25,10 +23,9 @@ namespace CalculatorApp
         public static bool IsCharacterNumber(char _input) => IsCharacterIn(_input,
             new char[10] {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'});
 
-        public static bool IsCharacterOperator(char _input) => IsCharacterIn(_input,
-            new char[5] { '-', '+', '*', '/', '^' });
-
         public static List<char> orderedOperators = new List<char>() { '-', '+', '*', '/', '^' };
+
+        public static bool IsCharacterOperator(char _input) => IsCharacterIn(_input, orderedOperators);
 
         public static bool IsCharacterBracket(char _input) => IsCharacterIn(_input,
             new char[2] { '(', ')' });
@@ -40,7 +37,7 @@ namespace CalculatorApp
             if (_input[0] == '(' && _input[_input.Length - 1] == ')') return true;
             return false;
         }
-        public  static bool IsOperatorUnbracketed(string _input)
+        public  static bool EquationContainsAnUnbracketedOperator(string _input)
         {
             foreach (var op in orderedOperators)
             {
@@ -74,9 +71,8 @@ namespace CalculatorApp
 
         public static bool IsOperatorDuplicated(string _input)
         {
-            List<char> _operators = new List<char>() { '-', '+', '*', '/' };
             var operatorCheck = new StringBuilder();
-            foreach (var _op in _operators)
+            foreach (var _op in orderedOperators)
             {
                 for (int i = 0; i < _input.Length; i++)
                 {
@@ -99,7 +95,7 @@ namespace CalculatorApp
 
         public static bool IsEquationValid(string _input)
         {
-            if (IsEquationNull(_input)) return false;
+            if (string.IsNullOrEmpty(_input)) return false;
 
             var hasInvalidCharacter = _input.Any(_character =>
                !(IsCharacterNumber(_character) || 
