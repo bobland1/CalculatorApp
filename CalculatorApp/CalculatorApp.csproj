@@ -43,12 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BidmasOrdering.cs" />
-    <Compile Include="BidmasOrderingExpressionTree.cs" />
     <Compile Include="Calculator.cs" />
-    <Compile Include="CalculationManager.cs" />
-    <Compile Include="ListManagement.cs" />
-    <Compile Include="NumbersListValidator.cs" />
+    <Compile Include="old_methods\old_Calculator.cs" />
+    <Compile Include="old_methods\old_CalculationManager.cs" />
+    <Compile Include="old_methods\old_ListManagement.cs" />
+    <Compile Include="old_methods\old_NumbersListValidator.cs" />
     <Compile Include="Operator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -57,5 +56,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

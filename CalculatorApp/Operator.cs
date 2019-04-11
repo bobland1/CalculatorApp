@@ -4,40 +4,47 @@ namespace CalculatorApp
 {
     public interface IOperator
     {
-        int DoMaths(int FirstNumber, int SecondNumber);
+        double DoMaths(double FirstNumber, double SecondNumber);
     }
     public class Add: IOperator
     {
-        public int DoMaths(int FirstNumber, int SecondNumber)
+        public double DoMaths(double FirstNumber, double SecondNumber)
         {
             return FirstNumber + SecondNumber;
         }
     }
     public class Subtract : IOperator
     {
-        public int DoMaths(int FirstNumber, int SecondNumber)
+        public double DoMaths(double FirstNumber, double SecondNumber)
         {
             return FirstNumber - SecondNumber;
         }
     }
     public class Multiply : IOperator
     {
-        public int DoMaths(int FirstNumber, int SecondNumber)
+        public double DoMaths(double FirstNumber, double SecondNumber)
         {
             return FirstNumber * SecondNumber;
         }
     }
     public class Divide : IOperator
     {
-        public int DoMaths(int FirstNumber, int SecondNumber)
+        public double DoMaths(double FirstNumber, double SecondNumber)
         {
             return FirstNumber / SecondNumber;
+        }
+    }
+    public class Indices : IOperator
+    {
+        public double DoMaths(double FirstNumber, double SecondNumber)
+        {
+            return Math.Pow(FirstNumber, SecondNumber);
         }
     }
 
     public class NoOperator : IOperator
     {
-        public int DoMaths(int FirstNumber, int SecondNumber)
+        public double DoMaths(double FirstNumber, double SecondNumber)
         {
             return FirstNumber;
         }
@@ -56,6 +63,8 @@ namespace CalculatorApp
                     return new Multiply();
                 case '/':
                     return new Divide();
+                case '^':
+                    return new Indices();
                 case ' ':
                     return new NoOperator();
                 default:

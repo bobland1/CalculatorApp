@@ -11,29 +11,41 @@ namespace CalculatorApp
     {
         public static void Main(string[] args)
         {
+            Console.WriteLine("Enter your equation: ");
             IntializeCalculator();
         }
+
         public static void IntializeCalculator()
         {
-            Calculator calc = new Calculator();
-            string equation = EquationHandler();
-
-            Console.WriteLine(
-                calc.CalculateEquation(
-                    EquationValidator.RemoveWhitespace(equation)));
-            Console.ReadKey();
-
+            string equation;
+            try
+            {
+                do
+                {
+                    equation = EquationHandler();
+                    Console.WriteLine(
+                    CalculationBuilder.Calculation(equation).getValue());
+                    Console.WriteLine("Enter another equation or Type 'exit' to exit: ");
+                }
+                while (equation.ToLower() != "exit");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("ERROR. Please try again");
+                IntializeCalculator();
+            }
         }
+
         public static string EquationHandler()
         {
             string equation;
             do
             {
-                Console.WriteLine("Enter your equation: ");
                 equation = Console.ReadLine()?.Trim();
+                if (equation == "exit") return equation;
+                if(!EquationValidator.IsEquationValid(EquationValidator.RemoveWhitespace(equation))) Console.WriteLine("Invalid Equation! Please try again.");
             }
-            while (!EquationValidator.IsEquationValid(equation));
-
+            while (!EquationValidator.IsEquationValid(EquationValidator.RemoveWhitespace(equation)));
             return equation;
         }
 

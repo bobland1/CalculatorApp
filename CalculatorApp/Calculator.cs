@@ -2,79 +2,83 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace CalculatorApp
 {
     public class Calculator
     {
-        private CalculationManager calcManager;
+        
+    }
 
-        public Calculator()
+    public static class CalculationBuilder
+    {
+        private static OperatorFactory Operation = new OperatorFactory();
+
+        public static IEquation Calculation(string equation)
         {
+            if (EquationValidator.IsWholeEquationWithinBrackets(equation) && EquationValidator.IsOperatorUnbracketed(equation)) return Calculation(equation.Substring(1, equation.Length - 2));
 
-        }
+            if (EquationValidator.IsStringNumber(equation)) return new Number(equation);
 
-        public int CalculateEquation(string equation)
-        {
-            var numberCharacterBuilder = new StringBuilder();
-
-            var numbers = new List<int>();
-            var operators = new List<char>();
-
-            int result = 0;
-            int counter = 0;
-
-            var Operation = new OperatorFactory();
-            calcManager = new CalculationManager();
-
-            var updatedPreviousResult = 0;
-            var updatedCurrentValue = 0;
-
-            foreach (var character in equation)
+            foreach (var op in EquationValidator.orderedOperators)
             {
-                if (EquationValidator.IsCharacterNumber(character))
+                var bracketCounter = 0;
+                for (int i = 0; i < equation.Length; i++)
                 {
-                    numberCharacterBuilder.Append(character);
-                }
-                else
-                {
-                    if (NumbersListValidator.IsListEmpty(numbers))
-                    {
-                        updatedPreviousResult = UpdateCalcManagerPrevious(numbers, numberCharacterBuilder.ToString());
-                        numberCharacterBuilder.Clear();
-                    }
-                    else
-                    {
-                        updatedCurrentValue = UpdateCalcManagerCurrent(numbers, numberCharacterBuilder.ToString());
-                        numberCharacterBuilder.Clear();
+                    if (equation[i] == '(') bracketCounter++;
+                    else if (equation[i] == ')') bracketCounter--;
 
-                        var NextOperation = Operation.GetOperator(operators[counter-1]);
-                        result = NextOperation.DoMaths(updatedPreviousResult, updatedCurrentValue);
-                        updatedPreviousResult = UpdateCalcManagerPrevious(numbers, result.ToString());
-                    }
-                    counter++;
-                    operators.Add(character);
+                    if (equation[i] == op && bracketCounter == 0) return new Equation(
+                        equation.Substring(0, i), 
+                        equation.Substring(i+1), 
+                        Operation.GetOperator(equation[i]));
                 }
             }
-            updatedCurrentValue = UpdateCalcManagerCurrent(numbers, numberCharacterBuilder.ToString());
+            if (equation == "exit")
+            {
+                Console.WriteLine("Exiting..");
+                Environment.Exit(-1);
+            }
+            throw new NotImplementedException();
+        }
+    }
 
-            var LastOperation = Operation.GetOperator(operators[operators.Count()-1]);
-            result = LastOperation.DoMaths(updatedPreviousResult, updatedCurrentValue);
+    public interface IEquation
+    {
+        double getValue();
+    }
 
-            return result;
+    public class Equation : IEquation
+    {
+        private IEquation Left;
+        private IEquation Right;
+        private IOperator Operator;
+
+        public Equation(string leftSide, string rightSide, IOperator Operator)
+        {
+            Left = CalculationBuilder.Calculation(leftSide);
+            Right = CalculationBuilder.Calculation(rightSide);
+            this.Operator = Operator;
         }
 
-        private int UpdateCalcManagerPrevious(List<int> numbers, string number)
+        public double getValue()
         {
-            ListManagement.AddToList(numbers, number);
-            return calcManager.Update(number, CalculationManager.UpdateActions.UpdatePrevious);
+            return Operator.DoMaths(Left.getValue(), Right.getValue());
         }
-        private int UpdateCalcManagerCurrent(List<int> numbers, string number)
+    }
+
+    public class Number : IEquation
+    {
+        private double num;
+        public Number(string equation)
         {
-            ListManagement.AddToList(numbers, number);
-            return calcManager.Update(number, CalculationManager.UpdateActions.UpdateCurrent);
+            double.TryParse(equation, out num);
+        }
+
+        public double getValue()
+        {
+            return num;
         }
     }
 }
