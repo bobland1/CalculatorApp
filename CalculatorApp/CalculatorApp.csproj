@@ -47,6 +47,7 @@
     <Compile Include="CalculationGenerator.cs" />
     <Compile Include="EquationTreeGenerator.cs" />
     <Compile Include="InvalidEquationException.cs" />
+    <Compile Include="InvalidOperatorException.cs" />
     <Compile Include="old_methods\old_Calculator.cs" />
     <Compile Include="old_methods\old_CalculationManager.cs" />
     <Compile Include="old_methods\old_ListManagement.cs" />

@@ -65,10 +65,8 @@ namespace CalculatorApp
                     return new Divide();
                 case '^':
                     return new Indices();
-                case ' ':
-                    return new NoOperator();
                 default:
-                    throw new Exception("Invalid Operator");
+                    throw new InvalidOperatorException("Invalid Operator");
                     
             }
         }
