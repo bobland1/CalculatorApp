@@ -31,7 +31,7 @@ namespace CalculatorApp
             }
             catch (Exception e)
             {
-                Console.WriteLine("ERROR. Please try again");
+                Console.WriteLine("ERR. Please try again");
                 IntializeCalculator();
             }
         }
