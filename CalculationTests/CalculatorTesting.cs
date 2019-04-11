@@ -17,7 +17,6 @@ namespace CalculationTests
         [DataRow("(2+(3*4))*(1*2)", true)]
         [DataRow("4-3*7+(2/2+(7*2))", true)]
         [DataRow("(1*2)*(2+(3*4))*(1*2)", true)]
-
         public void IsEquation_ValidTest(string _equation, bool expected)
         {
             var _result = EquationValidator.IsEquationValid(_equation);
@@ -79,6 +78,7 @@ namespace CalculationTests
 
             Assert.AreEqual(expected, _result.getValue());
         }
+
         [TestMethod]
         [DataRow("1^2", 1)]
         [DataRow("2^2", 4)]
