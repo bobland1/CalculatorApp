@@ -8,11 +8,19 @@ namespace CalculatorApp
 {
     public class InvalidOperatorException : Exception
     {
-        public override string Message { get; }
+        public InvalidOperatorException()
+        {
+        }
 
         public InvalidOperatorException(string message)
+            : base(message)
         {
-            Message = message;
+        }
+
+        public InvalidOperatorException(string message, Exception inner)
+            : base(message, inner)
+        {
+
         }
     }
 }

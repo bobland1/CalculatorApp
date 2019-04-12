@@ -8,11 +8,18 @@ namespace CalculatorApp
 {
     public class BadValueException : Exception
     {
-        public override string Message { get; }
+        public BadValueException()
+        {
+        }
 
         public BadValueException(string message)
+            : base(message)
         {
-            Message = message;
+        }
+
+        public BadValueException(string message, Exception inner)
+            : base(message, inner)
+        {
         }
     }
 }

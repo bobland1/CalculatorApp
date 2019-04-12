@@ -8,11 +8,18 @@ namespace CalculatorApp
 {
     public class InvalidEquationException : Exception
     {
-        public override string Message { get; }
+        public InvalidEquationException()
+        {
+        }
 
         public InvalidEquationException(string message)
+            : base(message)
         {
-            Message = message;
+        }
+
+        public InvalidEquationException(string message, Exception inner)
+            : base(message, inner)
+        {
         }
     }
 }
