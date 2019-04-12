@@ -16,7 +16,7 @@ namespace CalculatorApp
         public static bool IsCharacterIn(char _input, IEnumerable<char> characterArray) => characterArray.Contains(_input);
 
         public static bool IsCharacterNumber(char _input) => IsCharacterIn(_input,
-            new char[10] {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'});
+            new char[11] {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'});
 
         public static List<char> orderedOperators = new List<char>() { '-', '+', '*', '/', '^' };
 
@@ -32,6 +32,7 @@ namespace CalculatorApp
             if (_input[0] == '(' && _input[_input.Length - 1] == ')') return true;
             return false;
         }
+
         public  static bool EquationContainsAnUnbracketedOperator(string _input)
         {
             foreach (var op in orderedOperators)
@@ -62,6 +63,26 @@ namespace CalculatorApp
                 return false;
             }
             return true;
+        }
+        public static bool IsNumberMultipleDecimal(string _input)
+        {
+            var numberBuilder = new StringBuilder();
+            foreach (var _character in _input)
+            {
+                if (numberBuilder.ToString() == ".")
+                {
+                    return true;
+                }
+                if (_character == '.')
+                {
+                    numberBuilder.Append(_character);
+                }
+                if(IsCharacterBracket(_character) || IsCharacterOperator(_character))
+                {
+                    numberBuilder.Clear();
+                }
+            }
+            return false;
         }
 
         public static bool IsOperatorDuplicated(string _input)
@@ -97,6 +118,8 @@ namespace CalculatorApp
                IsCharacterOperator(_character) || 
                (IsBracketsValid(_input, IsCharacterBracket(_character)) && IsCharacterBracket(_character))));
             if (hasInvalidCharacter) return false;
+
+            if (IsNumberMultipleDecimal(_input)) return false;
 
             if (IsLastCharacterAOperator(_input)) return false;
 

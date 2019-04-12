@@ -27,14 +27,16 @@ namespace CalculationTests
 
         [TestMethod]
         [DataRow("", false)]
+        [DataRow("1+h", false)]
         [DataRow("test", false)]
         [DataRow("1++1", false)]
         [DataRow("1+1+", false)]
-        [DataRow("1+h", false)]
         [DataRow("1++1", false)]
         [DataRow("1+1+", false)]
+        [DataRow("1.1.1", false)]
         [DataRow("1+(2+2", false)]
         [DataRow("(1+2++2)", false)]
+        [DataRow("3*2.2.2.2", false)]
         [DataRow("4+4+(2*2+(3+3)", false)]
         public void IsEquation_InvalidTest(string _equation, bool expected)
         {
@@ -74,6 +76,20 @@ namespace CalculationTests
         [DataRow("4-3*7+(2/2+(7*2))", -32)]
         [DataRow("(1*2)*(2+(3*4))*(1*2)", 56)]
         public void SumOfEquation_BracketsTest(string _equation, double expected)
+        {
+            var _result = CalculationGenerator.Calculation(_equation);
+
+            _result.getValue().Should().Be(expected);
+        }
+
+        [TestMethod]
+        [DataRow("1.5+1", 2.5)]
+        [DataRow("1*3.5", 3.5)]
+        [DataRow("4/2.5", 1.6)]
+        [DataRow("12-2.5+2", 7.5)]
+        [DataRow("2+1.4545", 3.4545)]
+        [DataRow("1.5+1.5+1.5", 4.5)]
+        public void SumOfEquation_DecimalsTest(string _equation, double expected)
         {
             var _result = CalculationGenerator.Calculation(_equation);
 
