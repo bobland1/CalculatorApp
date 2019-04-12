@@ -36,7 +36,7 @@ namespace CalculatorApp
                         Operation.GetOperator(equation[i]));
                 }
             }
-            throw EquationValidator.InvalidEquationException();
+            throw new InvalidEquationException("Equation is Invalid!");
         }
     }
 }

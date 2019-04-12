@@ -13,11 +13,6 @@ namespace CalculatorApp
             return _input = _input.Replace(" ", string.Empty);
         }
 
-        public static Exception InvalidEquationException()
-        {
-            throw new InvalidEquationException("Equation is Invalid!");
-        }
-
         public static bool IsCharacterIn(char _input, IEnumerable<char> characterArray) => characterArray.Contains(_input);
 
         public static bool IsCharacterNumber(char _input) => IsCharacterIn(_input,
