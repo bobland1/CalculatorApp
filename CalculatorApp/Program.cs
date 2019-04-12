@@ -20,14 +20,10 @@ namespace CalculatorApp
             string equation;
             try
             {
-                do
-                {
-                    equation = EquationHandler();
-                    Console.WriteLine(
-                    CalculationGenerator.Calculation(equation).getValue());
-                    Console.WriteLine("Enter another equation or Type 'exit' to exit: ");
-                }
-                while (equation.Equals("exit", StringComparison.OrdinalIgnoreCase));
+                equation = EquationHandler();
+                Console.WriteLine(
+                CalculationGenerator.Calculation(equation).getValue());
+                Console.WriteLine("Enter another equation or Type 'exit' to exit: ");
             }
             catch (InvalidEquationException e)
             {
