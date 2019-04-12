@@ -37,18 +37,18 @@ namespace CalculatorApp
             string equation;
             do
             {
-                equation = Console.ReadLine()?.Trim();
+                equation = EquationValidator.RemoveWhitespace(Console.ReadLine()?.Trim());
                 if (equation.Equals("exit", StringComparison.OrdinalIgnoreCase))
                 {
                     Console.WriteLine("Exiting..");
                     Environment.Exit(-1);
                 }
-                if (!EquationValidator.IsEquationValid(EquationValidator.RemoveWhitespace(equation)))
+                if (!EquationValidator.IsEquationValid(equation))
                 {
                     Console.WriteLine("Invalid Equation! Please try again.");
                 }
             }
-            while (!EquationValidator.IsEquationValid(EquationValidator.RemoveWhitespace(equation)));
+            while (!EquationValidator.IsEquationValid(equation));
             return equation;
         }
 
