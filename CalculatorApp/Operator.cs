@@ -4,42 +4,41 @@ namespace CalculatorApp
 {
     public interface IOperator
     {
-        int DoMaths(int FirstNumber, int SecondNumber);
+        double DoMaths(double FirstNumber, double SecondNumber);
     }
     public class Add: IOperator
     {
-        public int DoMaths(int FirstNumber, int SecondNumber)
+        public double DoMaths(double FirstNumber, double SecondNumber)
         {
             return FirstNumber + SecondNumber;
         }
     }
     public class Subtract : IOperator
     {
-        public int DoMaths(int FirstNumber, int SecondNumber)
+        public double DoMaths(double FirstNumber, double SecondNumber)
         {
             return FirstNumber - SecondNumber;
         }
     }
     public class Multiply : IOperator
     {
-        public int DoMaths(int FirstNumber, int SecondNumber)
+        public double DoMaths(double FirstNumber, double SecondNumber)
         {
             return FirstNumber * SecondNumber;
         }
     }
     public class Divide : IOperator
     {
-        public int DoMaths(int FirstNumber, int SecondNumber)
+        public double DoMaths(double FirstNumber, double SecondNumber)
         {
             return FirstNumber / SecondNumber;
         }
     }
-
-    public class NoOperator : IOperator
+    public class Indices : IOperator
     {
-        public int DoMaths(int FirstNumber, int SecondNumber)
+        public double DoMaths(double FirstNumber, double SecondNumber)
         {
-            return FirstNumber;
+            return Math.Pow(FirstNumber, SecondNumber);
         }
     }
     public class OperatorFactory
@@ -56,10 +55,10 @@ namespace CalculatorApp
                     return new Multiply();
                 case '/':
                     return new Divide();
-                case ' ':
-                    return new NoOperator();
+                case '^':
+                    return new Indices();
                 default:
-                    throw new Exception("Invalid Operator");
+                    throw new InvalidOperatorException("Invalid Operator");
                     
             }
         }

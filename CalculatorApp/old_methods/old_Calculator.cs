@@ -7,23 +7,23 @@ using System.Threading.Tasks;
 
 namespace CalculatorApp
 {
-    public class Calculator
+    public class OldCalculator
     {
         private CalculationManager calcManager;
 
-        public Calculator()
+        public OldCalculator()
         {
 
         }
 
-        public int CalculateEquation(string equation)
+        public double CalculateEquation(string equation)
         {
             var numberCharacterBuilder = new StringBuilder();
 
             var numbers = new List<int>();
             var operators = new List<char>();
 
-            int result = 0;
+            double result = 0;
             int counter = 0;
 
             var Operation = new OperatorFactory();

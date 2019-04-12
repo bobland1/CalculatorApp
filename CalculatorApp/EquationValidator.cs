@@ -8,83 +8,100 @@ namespace CalculatorApp
 {
     public static class EquationValidator
     {
-        public static string RemoveWhitespace(string input)
+        public static string RemoveWhitespace(string _input)
         {
-            input = input.Replace(" ", string.Empty);
-
-            return input;
+            return _input = _input.Replace(" ", string.Empty);
         }
-        public static bool IsCharacterIn(char input, IEnumerable<char> characterArray) => characterArray.Contains(input);
 
-        public static bool IsCharacterNumber(char input) => IsCharacterIn(input,
+        public static bool IsCharacterIn(char _input, IEnumerable<char> characterArray) => characterArray.Contains(_input);
+
+        public static bool IsCharacterNumber(char _input) => IsCharacterIn(_input,
             new char[10] {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'});
-        public static bool IsCharacterOperator(char input) => IsCharacterIn(input,
-            new char[4] { '+', '-', '*', '/' });
 
-        public static bool IsOperatorDuplicated(string equation)
+        public static List<char> orderedOperators = new List<char>() { '-', '+', '*', '/', '^' };
+
+        public static bool IsCharacterOperator(char _input) => IsCharacterIn(_input, orderedOperators);
+
+        public static bool IsCharacterBracket(char _input) => IsCharacterIn(_input,
+            new char[2] { '(', ')' });
+
+        public static bool IsStringNumber(string _input) => !_input.Any(c => !IsCharacterNumber(c));
+
+        public static bool IsWholeEquationWithinBrackets(string _input)
         {
-            var _number = new StringBuilder();
-            char _operator = ' ';
-            var _numbers = new List<int>();
-
-            foreach (var character in RemoveWhitespace(equation))
+            if (_input[0] == '(' && _input[_input.Length - 1] == ')') return true;
+            return false;
+        }
+        public  static bool EquationContainsAnUnbracketedOperator(string _input)
+        {
+            foreach (var op in orderedOperators)
             {
-                if (EquationValidator.IsCharacterNumber(character))
+                var bracketCounter = 0;
+                for (int i = 0; i < _input.Length; i++)
                 {
-                    _number.Append(character);
-                    _operator = ' ';
+                    if (_input[i] == '(') bracketCounter++;
+                    else if (_input[i] == ')') bracketCounter--;
+
+                    if (_input[i] == op && bracketCounter == 0) return false;
                 }
-                else
+            }
+            return true;
+        }
+
+        public static bool IsBracketsValid(string _input, bool IsCharacterBracket)
+        {
+            if (IsCharacterBracket)
+            {
+                int bracketCounter = 0;
+                for (int i = 0; i < _input.Length; i++)
                 {
-                    if (_operator != ' ')
+                    if (_input[i] == '(') bracketCounter++;
+                    else if (_input[i] == ')') bracketCounter--;
+                }
+                if (bracketCounter == 0) return true;
+                return false;
+            }
+            return true;
+        }
+
+        public static bool IsOperatorDuplicated(string _input)
+        {
+            var operatorCheck = new StringBuilder();
+            foreach (var _op in orderedOperators)
+            {
+                for (int i = 0; i < _input.Length; i++)
+                {
+                    if (_input[i] == _op)
                     {
-                        return true;
+                        operatorCheck.Append(_input[i]);
+                        if (operatorCheck.Length == 2) return true;
                     }
-                    _numbers.Add(int.Parse(_number.ToString()));
-                    _number.Clear();
-                    _operator = character;
+                    else operatorCheck.Clear();
                 }
             }
-            _numbers.Add(int.Parse(_number.ToString()));
-
             return false;
         }
-        public static bool IsLastCharacterAOperator(string equation)
+        public static bool IsLastCharacterAOperator(string _input)
         {
-            char LastChar = equation.Substring(equation.Length - 1)[0];
-            if (IsCharacterOperator(LastChar))
-            {
-                return true;
-            }
+            char lastChar = _input.Substring(_input.Length - 1)[0];
+            if (IsCharacterOperator(lastChar)) return true;
             return false;
         }
 
-        public static bool IsEquationValid(string equation)
+        public static bool IsEquationValid(string _input)
         {
+            if (string.IsNullOrEmpty(_input)) return false;
 
-            var hasInValidCharacter = RemoveWhitespace(equation).Any(character =>
-                !(IsCharacterNumber(character) ||
-                IsCharacterOperator(character)));
+            var hasInvalidCharacter = _input.Any(_character =>
+               !(IsCharacterNumber(_character) || 
+               IsCharacterOperator(_character) || 
+               (IsBracketsValid(_input, IsCharacterBracket(_character)) && IsCharacterBracket(_character))));
+            if (hasInvalidCharacter) return false;
 
-            if (hasInValidCharacter)
-            {
-                return false;
-            }
-            var hasOperatorAtEnd = IsLastCharacterAOperator(equation);
+            if (IsLastCharacterAOperator(_input)) return false;
 
-            if (hasOperatorAtEnd)
-            {
-                return false;
-            }
-
-            var hasDoubleOperators = IsOperatorDuplicated(equation);
-
-            if(hasDoubleOperators)
-            {
-                return false;
-            } else {
-                return true;
-            }
+            if (IsOperatorDuplicated(_input)) return false;
+            return true;
         }
     }
 }
