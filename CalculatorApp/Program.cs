@@ -32,8 +32,8 @@ namespace CalculatorApp
             catch (InvalidEquationException e)
             {
                 Console.WriteLine(e.Message);
-                IntializeCalculator();
             }
+            IntializeCalculator();
         }
 
         public static string EquationHandler()
