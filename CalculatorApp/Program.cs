@@ -27,7 +27,7 @@ namespace CalculatorApp
                     CalculationGenerator.Calculation(equation).getValue());
                     Console.WriteLine("Enter another equation or Type 'exit' to exit: ");
                 }
-                while (equation.ToLower() != "exit");
+                while (equation.Equals("exit", StringComparison.OrdinalIgnoreCase));
             }
             catch (InvalidEquationException e)
             {
@@ -42,7 +42,7 @@ namespace CalculatorApp
             do
             {
                 equation = Console.ReadLine()?.Trim();
-                if (equation == "exit")
+                if (equation.Equals("exit", StringComparison.OrdinalIgnoreCase))
                 {
                     Console.WriteLine("Exiting..");
                     Environment.Exit(-1);

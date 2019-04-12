@@ -22,7 +22,7 @@ namespace CalculationTests
         {
             var _result = EquationValidator.IsEquationValid(_equation);
 
-            Assert.AreEqual(expected, _result);
+            _result.Should().Be(expected);
         }
 
         [TestMethod]
@@ -40,7 +40,7 @@ namespace CalculationTests
         {
             var _result = EquationValidator.IsEquationValid(_equation);
 
-            Assert.AreEqual(expected, _result);
+            _result.Should().Be(expected);
         }
 
         [TestMethod]
@@ -58,7 +58,7 @@ namespace CalculationTests
         {
             var _result = CalculationGenerator.Calculation(_equation);
 
-            Assert.AreEqual(expected, _result.getValue());
+            _result.getValue().Should().Be(expected);
         }
 
         [TestMethod]
@@ -77,7 +77,7 @@ namespace CalculationTests
         {
             var _result = CalculationGenerator.Calculation(_equation);
 
-            Assert.AreEqual(expected, _result.getValue());
+            _result.getValue().Should().Be(expected);
         }
 
         [TestMethod]
@@ -89,7 +89,7 @@ namespace CalculationTests
         {
             var _result = CalculationGenerator.Calculation(_equation);
 
-            Assert.AreEqual(expected, _result.getValue());
+            _result.getValue().Should().Be(expected);
         }
 
         [TestMethod]

@@ -41,14 +41,6 @@ namespace CalculatorApp
             return Math.Pow(FirstNumber, SecondNumber);
         }
     }
-
-    public class NoOperator : IOperator
-    {
-        public double DoMaths(double FirstNumber, double SecondNumber)
-        {
-            return FirstNumber;
-        }
-    }
     public class OperatorFactory
     {
         public IOperator GetOperator(char op)
