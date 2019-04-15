@@ -58,7 +58,7 @@ namespace CalculationTests
         [DataRow("10*10/2+25", 75)]
         public void SumOfEquation_OperatorsTest(string _equation, double expected)
         {
-            var _result = CalculationGenerator.Calculation(_equation);
+            var _result = EquationTreeGenerator.Calculation(_equation);
 
             _result.getValue().Should().Be(expected);
         }
@@ -77,7 +77,7 @@ namespace CalculationTests
         [DataRow("(1*2)*(2+(3*4))*(1*2)", 56)]
         public void SumOfEquation_BracketsTest(string _equation, double expected)
         {
-            var _result = CalculationGenerator.Calculation(_equation);
+            var _result = EquationTreeGenerator.Calculation(_equation);
 
             _result.getValue().Should().Be(expected);
         }
@@ -91,7 +91,7 @@ namespace CalculationTests
         [DataRow("1.5+1.5+1.5", 4.5)]
         public void SumOfEquation_DecimalsTest(string _equation, double expected)
         {
-            var _result = CalculationGenerator.Calculation(_equation);
+            var _result = EquationTreeGenerator.Calculation(_equation);
 
             _result.getValue().Should().Be(expected);
         }
@@ -103,7 +103,7 @@ namespace CalculationTests
         [DataRow("8+(7*2)^(2+1)", 2752)]
         public void SumOfEquation_IndicesTest(string _equation, double expected)
         {
-            var _result = CalculationGenerator.Calculation(_equation);
+            var _result = EquationTreeGenerator.Calculation(_equation);
 
             _result.getValue().Should().Be(expected);
         }
@@ -111,7 +111,7 @@ namespace CalculationTests
         [TestMethod]
         public void EquationHandlerTest()
         {
-            Action action = () => CalculationGenerator.Calculation("dfpihfisdfhidsjdsiosj");
+            Action action = () => EquationTreeGenerator.Calculation("dfpihfisdfhidsjdsiosj");
             action.Should().Throw<Exception>()
                 .WithMessage("Equation is Invalid!");
         }

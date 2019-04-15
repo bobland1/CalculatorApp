@@ -43,19 +43,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EquationChecking\EquationValidator.cs" />
     <Compile Include="Exceptions\BadValueException.cs" />
-    <Compile Include="CalculationGenerator.cs" />
     <Compile Include="EquationTreeGenerator.cs" />
+    <Compile Include="EquationTree\EquationNode.cs" />
     <Compile Include="Exceptions\InvalidEquationException.cs" />
     <Compile Include="Exceptions\InvalidOperatorException.cs" />
+    <Compile Include="EquationTree\IEquationNode.cs" />
+    <Compile Include="EquationTree\Number.cs" />
     <Compile Include="old_methods\old_Calculator.cs" />
     <Compile Include="old_methods\old_CalculationManager.cs" />
     <Compile Include="old_methods\old_ListManagement.cs" />
     <Compile Include="old_methods\old_NumbersListValidator.cs" />
-    <Compile Include="Operator.cs" />
+    <Compile Include="Operators\Add.cs" />
+    <Compile Include="Operators\Divide.cs" />
+    <Compile Include="Operators\Indices.cs" />
+    <Compile Include="Operators\IOperator.cs" />
+    <Compile Include="Operators\Multiply.cs" />
+    <Compile Include="OperatorFactory.cs" />
+    <Compile Include="Operators\Subtract.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="EquationValidator.cs" />
+    <Compile Include="EquationChecking\EquationHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

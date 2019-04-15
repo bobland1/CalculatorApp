@@ -3,53 +3,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CalculatorApp.Operators;
 
 namespace CalculatorApp
 {
-    public interface IEquationNode
+    public static class EquationTreeGenerator
     {
-        double getValue();
-    }
+        private static OperatorFactory Operation = new OperatorFactory();
 
-    public class EquationTreeGenerator : IEquationNode
-    {
-        private IEquationNode Left;
-        private IEquationNode Right;
-        private IOperator Operator;
-
-        public EquationTreeGenerator(string leftSide, string rightSide, IOperator Operator)
+        public static IEquationNode Calculation(string equation)
         {
-            Left = CalculationGenerator.Calculation(leftSide);
-            Right = CalculationGenerator.Calculation(rightSide);
-            this.Operator = Operator;
-        }
-
-        public double getValue()
-        {
-            return Operator.DoMaths(Left.getValue(), Right.getValue());
-        }
-    }
-
-    public class Number : IEquationNode
-    {
-        private double num;
-        public Number(string equation)
-        {
-            try
+            if (EquationHelper.IsWholeEquationWithinBrackets(equation) && EquationHelper.EquationContainsAnUnbracketedOperator(equation))
             {
-                if (!double.TryParse(equation, out num))
+                return Calculation(equation.Substring(1, equation.Length - 2));
+            }
+
+            if (EquationHelper.IsStringNumber(equation))
+            {
+                return new Number(equation);
+            }
+
+            foreach (var op in EquationHelper.orderedOperators)
+            {
+                var bracketCounter = 0;
+                for (int i = 0; i < equation.Length; i++)
                 {
-                    throw new BadValueException("Bad Value Returned!");
+                    if (equation[i] == '(') bracketCounter++;
+                    else if (equation[i] == ')') bracketCounter--;
+
+                    if (equation[i] == op && bracketCounter == 0) return new EquationNode(
+                        equation.Substring(0, i),
+                        equation.Substring(i + 1),
+                        Operation.GetOperator(equation[i]));
                 }
             }
-            catch (BadValueException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-        }
-        public double getValue()
-        {
-            return num;
+            throw new InvalidEquationException("Equation is Invalid!");
         }
     }
 }

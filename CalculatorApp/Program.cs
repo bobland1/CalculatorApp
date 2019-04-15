@@ -12,45 +12,41 @@ namespace CalculatorApp
         public static void Main(string[] args)
         {
             Console.WriteLine("Enter your equation: ");
-            IntializeCalculator();
+            Process();
         }
 
-        public static void IntializeCalculator()
+        private static void Process()
         {
-            string equation;
             try
             {
-                equation = EquationHandler();
-                Console.WriteLine(
-                CalculationGenerator.Calculation(equation).getValue());
-                Console.WriteLine("Enter another equation or Type 'exit' to exit: ");
+                var input = Console.ReadLine()?.Trim();
+
+                if (input.Equals("exit", StringComparison.OrdinalIgnoreCase))
+                {
+                    Console.WriteLine("Exiting..");
+                    Environment.Exit(-1);
+                }
+
+                var equation = EquationHelper.RemoveWhitespace(input);
+
+                if (EquationValidator.IsEquationValid(equation))
+                {
+                    var result = EquationTreeGenerator.Calculation(equation).getValue();
+                    Console.WriteLine(result);
+                    
+                    Console.WriteLine("Enter another equation or Type 'exit' to exit: ");
+                    Process();
+                }
+                else
+                {
+                    Console.WriteLine("Invalid Equation! Please try again.");
+                    Process();
+                }
             }
             catch (InvalidEquationException e)
             {
                 Console.WriteLine(e.Message);
             }
-            IntializeCalculator();
         }
-
-        public static string EquationHandler()
-        {
-            string equation;
-            do
-            {
-                equation = EquationValidator.RemoveWhitespace(Console.ReadLine()?.Trim());
-                if (equation.Equals("exit", StringComparison.OrdinalIgnoreCase))
-                {
-                    Console.WriteLine("Exiting..");
-                    Environment.Exit(-1);
-                }
-                if (!EquationValidator.IsEquationValid(equation))
-                {
-                    Console.WriteLine("Invalid Equation! Please try again.");
-                }
-            }
-            while (!EquationValidator.IsEquationValid(equation));
-            return equation;
-        }
-
     }
 }
