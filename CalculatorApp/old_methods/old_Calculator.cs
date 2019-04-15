@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using CalculatorApp.Operators;
 
 namespace CalculatorApp
 {
@@ -34,7 +35,7 @@ namespace CalculatorApp
 
             foreach (var character in equation)
             {
-                if (EquationValidator.IsCharacterNumber(character))
+                if (EquationHelper.IsCharacterNumber(character))
                 {
                     numberCharacterBuilder.Append(character);
                 }

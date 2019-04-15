@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CalculatorApp
 {
-    public static class EquationValidator
+    public static class EquationHelper
     {
         public static string RemoveWhitespace(string _input)
         {
@@ -107,24 +107,6 @@ namespace CalculatorApp
             char lastChar = _input.Substring(_input.Length - 1)[0];
             if (IsCharacterOperator(lastChar)) return true;
             return false;
-        }
-
-        public static bool IsEquationValid(string _input)
-        {
-            if (string.IsNullOrEmpty(_input)) return false;
-
-            var hasInvalidCharacter = _input.Any(_character =>
-               !(IsCharacterNumber(_character) || 
-               IsCharacterOperator(_character) || 
-               (IsBracketsValid(_input, IsCharacterBracket(_character)) && IsCharacterBracket(_character))));
-            if (hasInvalidCharacter) return false;
-
-            if (IsNumberMultipleDecimal(_input)) return false;
-
-            if (IsLastCharacterAOperator(_input)) return false;
-
-            if (IsOperatorDuplicated(_input)) return false;
-            return true;
         }
     }
 }
