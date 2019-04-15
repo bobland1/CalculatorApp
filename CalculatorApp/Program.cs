@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace CalculatorApp
 {
@@ -34,10 +35,11 @@ namespace CalculatorApp
 
         public static string EquationHandler()
         {
+            Calculator_Interface CalcInterface = new Calculator_Interface();
             string equation;
             do
             {
-                equation = EquationValidator.RemoveWhitespace(Console.ReadLine()?.Trim());
+                equation = EquationValidator.RemoveWhitespace(CalcInterface.textbox1.Text?.Trim());
                 if (equation.Equals("exit", StringComparison.OrdinalIgnoreCase))
                 {
                     Console.WriteLine("Exiting..");
