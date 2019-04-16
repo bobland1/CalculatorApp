@@ -56,8 +56,15 @@ namespace CalculatorApp
                 int bracketCounter = 0;
                 for (int i = 0; i < _input.Length; i++)
                 {
-                    if (_input[i] == '(') bracketCounter++;
-                    else if (_input[i] == ')') bracketCounter--;
+                    if (_input.Length != 2)
+                    {
+                        if (_input[i] == '(') bracketCounter++;
+                        else if (_input[i] == ')') bracketCounter--;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 if (bracketCounter == 0) return true;
                 return false;
